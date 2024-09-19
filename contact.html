@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Full-stack Web Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"> </script>
+</head>
+<body class="bg-white min-h-screen flex flex-col">
+<header class="p-4">
+    <nav class="container mx-auto flex justify-between items-center">
+        <a href="index.html"> <img src="assets/image/avata.png" alt="Profile" class="rounded-full w-10 h-10"> </a>
+        <div class="flex space-x-4">
+            <a href="index.html" class="text-gray-600 hover:text-gray-800">Home</a>
+            <a href="about.html" class="text-gray-600 hover:text-gray-800">About</a>
+            <a href="assets/pdf/CV_Thanh_Son.pdf" class="text-gray-600 hover:text-gray-800">Resume</a>
+            <a href="contact.html" class="text-gray-600 hover:text-gray-800">Contact</a>
+        </div>
+    </nav>
+</header>
+
+<main class="flex-grow container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8 text-center">Get In Touch</h1>
+    <div class="max-w-md mx-auto">
+
+        <p class="text-left mb-4">
+            <i class="fa-brands fa-linkedin-in"></i>:
+            <a href="https://www.linkedin.com/in/thanhson2520/" class="text-blue-500 hover:underline">/thanhson2520/</a>
+        </p>
+        <form id="contact-form">
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 mb-2">Name</label>
+                <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-md"
+                       placeholder="Son Bui" required>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md"
+                       placeholder="sonbui2522@gmail.com" required>
+            </div>
+            <div class="mb-4">
+                <label for="message" class="block text-gray-700 mb-2">Message</label>
+                <textarea id="message" name="message" rows="4"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Send
+            </button>
+        </form>
+        <p id="status" class="mt-4 text-center"></p>
+
+    </div>
+</main>
+
+<footer class="w-full mt-8">
+    <div class="bg-gray-300 h-40 w-full"
+         style="mask-image: url('assets/image/gr-skyline-75e1e213361fdfc172482d34f0f380d4.png'); mask-size: cover; mask-position: center bottom;"></div>
+</footer>
+</body>
+
+<script type="text/javascript">
+    (function(){
+        emailjs.init({
+            publicKey: "VZQLNDYdJaYztvPqJ",
+        });
+    })();
+
+    document.getElementById('contact-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Ngăn form tự động submit
+
+        // Lấy giá trị từ form
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        // Tạo đối tượng email
+        const emailParams = {
+            from_name: name,
+            to_email: email,
+            message: message
+        };
+
+        // Gửi email qua EmailJS
+        emailjs.send('service_eox19nj', 'template_v4zzatl', emailParams)
+            .then(function (response) {
+                console.log('SUCCESS!', response.status, response.text);
+                document.getElementById('status').innerText = 'Email sent successfully!';
+                document.getElementById('contact-form').reset();
+            }, function (error) {
+                console.log('FAILED...', error);
+                document.getElementById('status').innerText = 'Failed to send email.';
+            });
+    });
+</script>
+</html>
